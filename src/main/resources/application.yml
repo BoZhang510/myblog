@@ -1,0 +1,19 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+    #日期格式
+    date-format: yyyy-MM-dd
+  profiles:
+    active: dev
+
+#mybatis的相关配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.xzhy.zhb.myblog.pojo
+
+#  开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
