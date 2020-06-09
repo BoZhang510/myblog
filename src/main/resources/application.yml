@@ -17,3 +17,12 @@ mybatis:
 #  开启驼峰命名
   configuration:
     map-underscore-to-camel-case: true
+
+#pagehelper:
+#  dialect: mysql
+#  #超过最大页数不再返回数据
+#  reasonable: false
+#  support-methods-arguments: true
+#  params: count=countSql
+
+comment.avatar: /images/portrait.jpg

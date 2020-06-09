@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 为根元素节点， 一个namespace对应一个dao -->
+<!--表得字段可以用``-->
+<mapper namespace="com.xzhy.zhb.myblog.mapper.TagMapper">
+    <select id="getTagById" resultType="com.xzhy.zhb.myblog.pojo.Tag">
+        select t.`id`,t.`name` from t_tag t where t.id = #{id}
+    </select>
+
+    <select id="getTagByName" resultType="com.xzhy.zhb.myblog.pojo.Tag">
+        select t.`id`,t.`name`from t_tag t where t.`name` = #{name}
+    </select>
+
+    <insert id="saveTag" parameterType="com.xzhy.zhb.myblog.pojo.Tag">
+        insert into t_tag values (#{id},#{name})
+    </insert>
+
+    <update id="updateTag" parameterType="com.xzhy.zhb.myblog.pojo.Tag">
+        update t_tag t set t.`name` = {#name} where t.`id` = #{id}
+    </update>
+
+    <delete id="deleteTag">
+        delete from t_tag  where id = #{id}
+    </delete>
+
+    <select id="getAdminTag" resultType="com.xzhy.zhb.myblog.pojo.Tag">
+        select t.`id`,t.`name` from t_tag t
+    </select>
+
+    <resultMap id="mytags" type="com.xzhy.zhb.myblog.pojo.Tag" autoMapping="true">
+        <id property="id" column="tid"></id>
+        <result property="name" column="tname"></result>
+        <collection property="blogs" ofType="com.xzhy.zhb.myblog.pojo.Blog" autoMapping="true">
+            <id property="id" column="bid"></id>
+            <result property="title" column="title"></result>
+        </collection>
+    </resultMap>
+
+    <!--标签和博客属于多对多，建立一个对应关系表-->
+    <select id="getAllTag" resultMap="mytags">
+        select t.`id` tid,t.`name` tname,b.id bid,b.title from t_tag t,t_blog b,t_blog_tags bt
+        where t.`id`=bt.`tag_id`and b.`id` = bt.`blog_id`
+    </select>
+</mapper>
